@@ -1,0 +1,38 @@
+.overlay {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(224, 224, 224);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  
+  background-color: rgb(134, 134, 134);
+  min-height: 300px;
+  padding: 16px;
+  border-radius: 6px;
+  min-width: 400px;
+  padding-bottom: 60px;
+}
+
+.input-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.error {
+  color: white;
+  font-size: 12px;
+}
