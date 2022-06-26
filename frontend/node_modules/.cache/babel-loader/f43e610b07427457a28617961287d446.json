@@ -1,0 +1,1 @@
+{"ast":null,"code":"var DefaultTheme = {\n  dark: false,\n  colors: {\n    primary: 'rgb(0, 122, 255)',\n    background: 'rgb(242, 242, 242)',\n    card: 'rgb(255, 255, 255)',\n    text: 'rgb(28, 28, 30)',\n    border: 'rgb(216, 216, 216)',\n    notification: 'rgb(255, 59, 48)'\n  }\n};\nexport default DefaultTheme;","map":null,"metadata":{},"sourceType":"module"}

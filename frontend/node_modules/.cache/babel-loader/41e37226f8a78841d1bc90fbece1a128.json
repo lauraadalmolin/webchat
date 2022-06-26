@@ -1,0 +1,1 @@
+{"ast":null,"code":"var DarkTheme = {\n  dark: true,\n  colors: {\n    primary: 'rgb(10, 132, 255)',\n    background: 'rgb(1, 1, 1)',\n    card: 'rgb(18, 18, 18)',\n    text: 'rgb(229, 229, 231)',\n    border: 'rgb(39, 39, 41)',\n    notification: 'rgb(255, 69, 58)'\n  }\n};\nexport default DarkTheme;","map":null,"metadata":{},"sourceType":"module"}
