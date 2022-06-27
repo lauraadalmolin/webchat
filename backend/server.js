@@ -4,21 +4,23 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 
+const PORT = 8080;
+const colors = ['#ff0094', '#ff7e28', '#22c935', '#4cb1ff'];
+const usernames = new Map();
+let connections = 0;
+
+server.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
+});
+
+
+// Dealing with sockets
 const io = require('socket.io')(server, {
   cors: {
     origin: ['http://192.168.0.115:3000', 'http://localhost:3000'],
     methods: ['GET', 'POST'],
   },
 });
-
-const PORT = 8080;
-const usernames = new Set();
-
-server.listen(PORT, () => {
-  console.log(`listening on *:${PORT}`);
-});
-
-let connections = 0;
 
 io.on('connection', (socket) => {
   connections++;
@@ -27,12 +29,14 @@ io.on('connection', (socket) => {
 
 
   socket.on('message', (res) => {
-    console.log(res);
-    io.emit('message', res);
+    const color = usernames.get(res.author);
+    io.emit('message', {...res, color});
   });
 });
 
-// middleware
+// HTTP SERVER
+
+// Middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   const allowedOrigins = [
@@ -53,13 +57,14 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/login', (req, res) => {
   const username = req.body.username;
   const isUsernameAvailable = !usernames.has(username);
-
+  
   const response = {
     success: isUsernameAvailable
   };
   
   if (isUsernameAvailable) {
-    usernames.add(username);
+    const color = colors.pop() || 'black';
+    usernames.set(username, color);
   } 
   
   res.status = 200;

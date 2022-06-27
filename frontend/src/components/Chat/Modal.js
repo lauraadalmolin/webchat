@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../UI/Button';
 import './Modal.css';
 
 const SERVER = 'http://192.168.0.115:8080'
@@ -39,12 +40,11 @@ const Modal = (props) => {
 
   return <div className='overlay'>
     <div className='modal'>
-      <h1 className='title'>Pick a username</h1>
-      <div className='input-div'>
-        <input value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
-        {!available && <span className='error'>Please choose a different username, the one you tried is already taken.</span>}
-        <button onClick={submit}>Enviar</button>
-      </div>
+      <h1 className='title'>Guess the drawing</h1>
+      <input placeholder="Room code"></input>
+      <input placeholder="Username" value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
+      {!available && <span className='error'>Please choose a different username, the one you tried is already taken.</span>}
+      <Button onClick={submit}>PLAY</Button>
     </div>
   </div>;
 }
