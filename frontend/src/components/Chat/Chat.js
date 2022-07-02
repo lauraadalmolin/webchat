@@ -8,7 +8,7 @@ import socketClient from 'socket.io-client';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
 
-const SERVER = 'http://192.168.0.115:8080';
+const SERVER = 'http://192.168.0.111:8080';
 
 const Chat = () => {
   const [username, setUsername] = useState('');
@@ -39,14 +39,17 @@ const Chat = () => {
     }
 
     setSocket(newSocket);
-    return () => newSocket.close();
+    return () => newSocket.disconnect({username});
   }, []);
 
   useEffect(() => {
     if (!socket) return;
 
+    socket.emit('username_defined', { username });
+
     socket.on('message', (receivedMessage) => {
       if (receivedMessage.author !== username) {
+        console.log(receivedMessage.color)
         addMessageHandler(receivedMessage, 'sent-by-others');
       }
     });
@@ -75,17 +78,21 @@ const Chat = () => {
       )}
       <h1 className='title extra-padding'>Chat</h1>
       <div className='chat'>
+        <span className='scroll-start-at-top'></span>
         {messages.map((message) => (
           <div
             className={`${message.className} message-container`}
             key={message.key}
           >
             <div className={`message message--${message.className}`}>
-              {message.author !== username && <p
-                className='message-author'
-                style={{ color: message.color || 'black' }}>
-                {message.author}
-              </p>}
+              {message.author !== username && (
+                <p
+                  className='message-author'
+                  style={{ color: message.color || 'black' }}
+                >
+                  {message.author}
+                </p>
+              )}
               <p>{message.text}</p>
             </div>
           </div>

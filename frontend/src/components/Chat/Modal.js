@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import Button from '../UI/Button';
 import './Modal.css';
 
-const SERVER = 'http://192.168.0.115:8080'
+const SERVER = 'http://192.168.0.111:8080'
 
 const Modal = (props) => {
   let [username, setUsername] = useState('');
+  let [invalid, setInvalid] = useState(false);
   let [available, setAvailable] = useState(true);
 
   const usernameChangedHandler = (event) => {
+    setInvalid(false);
     setUsername(event.target.value);
-    console.log(event);
   };
 
   const submitWhenEnterIsPressed = (event) => {
@@ -21,6 +22,11 @@ const Modal = (props) => {
   }
 
   const submit = async () => {
+    if (!username) {
+      setInvalid(true);
+      return;
+    }
+
     const response = await fetch(`${SERVER}/login`, {
       method: 'POST',
       body: JSON.stringify({ username: username }),
@@ -40,11 +46,14 @@ const Modal = (props) => {
 
   return <div className='overlay'>
     <div className='modal'>
-      <h1 className='title'>Guess the drawing</h1>
-      <input placeholder="Room code"></input>
-      <input placeholder="Username" value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
-      {!available && <span className='error'>Please choose a different username, the one you tried is already taken.</span>}
-      <Button onClick={submit}>PLAY</Button>
+      <h1 className='title'>Webchat</h1>
+      {/* <input placeholder="Room code"></input> */}
+      <div className='username-input'>
+        <input className={invalid ? 'input-error' : ''} placeholder='Username' value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
+        {invalid && <span className='error'>Please choose a valid username.</span>}
+        {!invalid && !available && <span className='error'>Please choose a different username, the one you tried is already taken.</span>}
+      </div>
+      <Button onClick={submit}>Go</Button>
     </div>
   </div>;
 }

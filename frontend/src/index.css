@@ -1,6 +1,7 @@
 :root {
-  --primary-color: #2C0088;
-  --seconday-color: #F4B367;
+  --primary-color: #583c92;
+  --seconday-color: #b433ff;
+  --background: rgb(247, 247, 247);
 }
 
 body {
@@ -10,7 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(224, 224, 224);
+  background-color: var(--background);
 }
 
 code {
@@ -57,4 +58,22 @@ code {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+input {
+  flex: 1;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  max-height: 18px;
+}
+
+input:focus {
+  outline: none;
 }
