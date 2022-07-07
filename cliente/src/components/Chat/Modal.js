@@ -5,15 +5,18 @@ import './Modal.css';
 const SERVER = 'http://192.168.0.111:8080'
 
 const Modal = (props) => {
+  // create states
   let [username, setUsername] = useState('');
   let [invalid, setInvalid] = useState(false);
   let [available, setAvailable] = useState(true);
 
+  // whenever username changes, invalid is false and we update state
   const usernameChangedHandler = (event) => {
     setInvalid(false);
     setUsername(event.target.value);
   };
 
+  // handler for sumitting whenever enter is pressed
   const submitWhenEnterIsPressed = (event) => {
     const keyCode = event.keyCode;
     if (keyCode === 13) {
@@ -27,6 +30,7 @@ const Modal = (props) => {
       return;
     }
 
+    // send post request to server
     const response = await fetch(`${SERVER}/login`, {
       method: 'POST',
       body: JSON.stringify({ username: username }),
@@ -37,6 +41,7 @@ const Modal = (props) => {
 
     const data = await response.json();
 
+    // validate response
     if (data.success) {
       props.onSuccessHandler(username);
     } else {
@@ -49,7 +54,7 @@ const Modal = (props) => {
       <h1 className='title'>Webchat</h1>
       {/* <input placeholder="Room code"></input> */}
       <div className='username-input'>
-        <input className={invalid ? 'input-error' : ''} placeholder='Username' value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
+        <input className={invalid || !available ? 'input-error' : ''} placeholder='Username' value={username} onChange={usernameChangedHandler} onKeyDown={submitWhenEnterIsPressed}></input>
         {invalid && <span className='error'>Please choose a valid username.</span>}
         {!invalid && !available && <span className='error'>Please choose a different username, the one you tried is already taken.</span>}
       </div>
